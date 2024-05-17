@@ -10,18 +10,17 @@ const createJob = async (req, res) => {
     res.status(StatusCodes.CREATED).json({ job })
 }
 const getAllJobs = async (req, res) => {
-
     const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
-    const skip = (parseInt(page, 10) - 1) * parseInt(limit, 10);
-    const searchQuery = req.query.q || ''
+    const limit = 9; // Consistent limit of 9 jobs per page
+    const skip = (page - 1) * limit;
+
+    const searchQuery = req.query.q || '';
     const sortField = req.query.sortBy || 'createdAt';
     const sortOrder = req.query.sortOrder || 'desc';
     const searchCriteria = {
         $or: [
             { company: { $regex: searchQuery, $options: 'i' } }, // Match company name
             { position: { $regex: searchQuery, $options: 'i' } }, // Match position name
-
             // Add more search criteria if needed
         ]
     };
@@ -34,15 +33,16 @@ const getAllJobs = async (req, res) => {
 
     const metadata = {
         total,
-        page: page,
+        page,
         pageCount: Math.ceil(total / limit),
-        pageSize: limit,
-
+        pageSize: jobs.length,
     };
 
-
     res.status(StatusCodes.OK).json({ jobs, metadata });
-}
+};
+
+
+
 const getSingleJob = async (req, res) => {
     const jobid = req.params.id;
     // console.log(req);
