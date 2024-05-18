@@ -70,13 +70,13 @@ const applyForJobWithResume = async (req, res) => {
             host: 'smtp.gmail.com',
             port: 587,
             auth: {
-                user: 'vishal8409003672@gmail.com',
+                user: 'rohitkumarsingh337@gmail.com',
                 pass: process.env.App_Pass,
             },
         });
         const mailOptions = {
-            from: '"vishal" <vishal8409003672@gmail.com>',
-            to: 'visalkr976@gmail.com',
+            from: '"Rohit" <rohitkumarsingh337@gmail.com>',
+            to: 'rohitkumarsingh337@gmail.com',
             subject: 'New Job Application',
             html: `
                 <div style="font-family: Arial, sans-serif; margin-bottom: 20px;">
